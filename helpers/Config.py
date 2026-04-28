@@ -12,6 +12,11 @@ class Settings(BaseSettings):
     CHROMA_PATH:str
     CHROMA_COLL:str
 
+    LANGCHAIN_API_KEY:str
+    LANGCHAIN_TRACING_V2:str
+    LANGCHAIN_ENDPOINT:str
+    LANGCHAIN_PROJECT:str
+
     OPENAI_API_KEY:str
     OPENAI_API_URL:str
     OPENAI_GENERATION_MODEL_ID:str
