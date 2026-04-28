@@ -134,7 +134,7 @@ def inspect_collection(client: chromadb.PersistentClient, name: str, sample_size
         print(f"  {DIM}{preview}{'...' if len(doc or '') > 280 else ''}{R}")
 
         # Embedding info
-        if emb:
+        if emb is not None and len(emb) > 0:
             dims = len(emb)
             sample_vals = ", ".join(f"{v:.4f}" for v in emb[:4])
             print(f"\n  {B}Embedding:{R} {DIM}{dims} dims — [{sample_vals}, ...]{R}")
@@ -302,21 +302,18 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-
 # # See all collections + summary
-# python chroma_inspector.py --path assets/chroma_db
+# python utils/investigate_Chroma.py --path assets/chroma_db
 
 # # Deep inspect a specific collection
-# python chroma_inspector.py --path assets/chroma_db --collection my_collection
+# python utils/investigate_Chroma.py --path assets/chroma_db --collection my_collection
 
 # # Search inside a collection
-# python chroma_inspector.py --path assets/chroma_db --collection my_collection --search "your query here"
+# python utils/investigate_Chroma.py --path assets/chroma_db --collection my_collection --search "your query here"
 
 # # Search with a custom embedding model
-# python chroma_inspector.py --path assets/chroma_db --collection my_collection \
+# python utils/investigate_Chroma.py --path assets/chroma_db --collection my_collection \
 #   --search "your query" --embed-model "all-MiniLM-L6-v2"
 
 # # Control how many results/samples to show
-# python chroma_inspector.py --path assets/chroma_db --collection my_collection --sample 10 --n 8
+# python utils/investigate_Chroma.py --path assets/chroma_db --collection my_collection --sample 10 --n 8
