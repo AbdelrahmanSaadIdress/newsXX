@@ -12,7 +12,7 @@ from Scraper.BulkScraping import BulkScraper
 from Scraper.PageScraping import PageScaraper
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-MAIN_PAGE_URL = "https://www.ajnet.me"
+MAIN_PAGE_URL = "https://www.ajnet.me/news"
 NEWS_FEED_URL = f"{MAIN_PAGE_URL}"
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
@@ -27,7 +27,7 @@ class ScrapeResponse(BaseModel):
 
 # ── Core task ─────────────────────────────────────────────────────────────────
 async def _run_bulk(num_of_samples: int, day_only: bool):
-    scraper = BulkScraper(headless=True)
+    scraper = BulkScraper(headless=False)
     try:
         await run_in_threadpool(
             scraper.scrape_bulk,
