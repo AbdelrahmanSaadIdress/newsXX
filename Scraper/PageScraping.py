@@ -3,6 +3,7 @@ from helpers.Config import get_settings, Settings
 
 from pymongo import MongoClient
 import chromadb
+import time
 
 from stores.llm.LLM_Factory import LLMFactory
 
@@ -82,7 +83,7 @@ class PageScaraper:
                 "chunk_index":  int(i),
                 "total_chunks": int(len(chunks)),
             })
-
+            time.sleep(0.5)
         if ids:
             self.chroma_col.add(
                 ids        = ids,
@@ -135,7 +136,8 @@ class PageScaraper:
                 }
             )
             return None
-
+        
+        time.sleep(0.5)
         return {
             "title":title,
             "description":description,
