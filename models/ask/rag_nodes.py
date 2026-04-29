@@ -297,14 +297,10 @@ async def grade_chunks(state: RAGState, config: RunnableConfig) -> RAGState:
     verdicts: list[bool] = await asyncio.gather(
         *[_grade_one(c) for c in state.raw_chunks]
     )
-    print(state.raw_chunks)
 
     state.relevant_chunks = [
         c for c, ok in zip(state.raw_chunks, verdicts) if ok
     ]
-    print("=============================="*10)
-    print(state.relevant_chunks)
-    print("=============================="*10)
 
 
     logger.info(

@@ -122,13 +122,6 @@ async def _fresh_stream(
     # Phase 1
     state = await _run_retrieval(RAGState(question=question), config)
     state = RAGState(**state)
-    print("*****"*10)
-    print(f"{state=}")
-    print("*****"*10)
-    print(f"{state.raw_chunks=}")
-    print("*****"*10)
-    print(f"{state.relevant_chunks=}")
-    print("*****"*10)
     
     # Phase 2
     messages = build_answer_prompt(state)
