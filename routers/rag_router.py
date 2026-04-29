@@ -163,7 +163,7 @@ async def _followup_stream(
         ),
         config,
     )
-
+    state = RAGState(**state)
     # Phase 2
     messages = build_answer_prompt(state)
 
