@@ -107,6 +107,8 @@ class OpenAIProvider:
             stream      = True,
         ) as stream:
             for chunk in stream:
+                if not chunk.choices:
+                    continue  # skip empty chunks
                 token = chunk.choices[0].delta.content
                 if token is not None:
                     yield token
