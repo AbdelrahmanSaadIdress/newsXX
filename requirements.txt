@@ -1,0 +1,17 @@
+selenium==4.43.0
+pyquery==2.0.1
+pymongo==4.17.0
+chromadb==1.5.5
+pydantic-settings==2.13.1
+json_repair==0.58.5
+huggingface_hub==1.6.0
+openai==2.26.0
+python-dotenv==1.2.2
+fastapi==0.135.1
+uvicorn==0.41.0
+apscheduler==3.11.2
+langgraph==1.0.10
+transformers==5.3.0
+peft==0.19.1
+motor==3.7.1  
+json_repair==0.58.5
