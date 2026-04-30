@@ -7,6 +7,10 @@ from peft import PeftModel
 
 import torch
 import json_repair
+import json
+from pydantic import BaseModel
+
+
 from schema import NewsDetails, TranslatedStory
 from pydantic import ValidationError
 
@@ -62,14 +66,21 @@ class A_TDeps:
 
     # ── prompt builders ───────────────────────────────────────────────────────
 
-    def build_instruction(self, story: str, task: str) -> str:
+
+    def build_instruction(self, story: str, task: str, schema: type[NewsDetails] | type[TranslatedStory]) -> str:
         """Build the user-side instruction block."""
+        schema_str = json.dumps(schema.model_json_schema(), indent=2)
         return "\n".join([
             "# Story:",
             story,
             "",
             "# Task:",
             task,
+            "",
+            "# Output Schema:",
+            "```json",
+            schema_str,
+            "```",
             "",
             "# Output JSON:",
             "```json",
@@ -89,6 +100,10 @@ class A_TDeps:
 
     def parse_json(self, text: str):
         try:
+            print("*******************************************")
+            print(text)
+            print("*******************************************")
+
             return json_repair.loads(text)
         except Exception:
             return None
@@ -127,14 +142,15 @@ class A_TDeps:
 
     def generate_analysis(self, story: str) -> NewsDetails | None:
         # FIX: build_instruction now receives the task; build_prompt receives only instruction
-        instruction = self.build_instruction(story=story, task=self.analyzing_task)
+        instruction = self.build_instruction(story=story, task=self.analyzing_task, schema=NewsDetails)
+        # instruction = self.build_instruction(story=story, task=self.analyzing_task)
         prompt      = self.build_prompt(instruction)
 
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
         with torch.no_grad():
             outputs = self.model.generate(
                 **inputs,
-                max_new_tokens=512,
+                max_new_tokens=4048,
                 temperature=0.2,
                 do_sample=False,
             )
@@ -177,7 +193,9 @@ class A_TDeps:
 
     def generate_english_translation(self, story: str) -> TranslatedStory | None:
         # FIX: same pattern — task passed to build_instruction, not build_prompt
-        instruction = self.build_instruction(story=story, task=self.translate_english_task)
+        # instruction = self.build_instruction(story=story, task=self.translate_english_task)
+        instruction = self.build_instruction(story=story, task=self.translate_english_task, schema=TranslatedStory)
+
         prompt      = self.build_prompt(instruction)
 
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
@@ -193,15 +211,16 @@ class A_TDeps:
         return self.extract_and_validate_translation(response)
 
     def generate_french_translation(self, story: str) -> TranslatedStory | None:
-        # FIX: same pattern
-        instruction = self.build_instruction(story=story, task=self.translate_french_task)
+        # instruction = self.build_instruction(story=story, task=self.translate_french_task)
+        instruction = self.build_instruction(story=story, task=self.translate_french_task, schema=TranslatedStory)
+
         prompt      = self.build_prompt(instruction)
 
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
         with torch.no_grad():
             outputs = self.model.generate(
                 **inputs,
-                max_new_tokens=512,
+                max_new_tokens=4048,
                 temperature=0.2,
                 do_sample=False
             )

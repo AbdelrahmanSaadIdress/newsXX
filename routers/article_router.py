@@ -232,6 +232,10 @@ async def translate(
     else:
         translation_fn = at_deps.generate_french_translation
 
+    print("ggggggggggggggggggggggggggggggggggggggggggg")
+    print(body.article)
+    print("ggggggggggggggggggggggggggggggggggggggggggg")
+
     result = await run_in_threadpool(translation_fn, body.article)
 
     if result is None:

@@ -139,6 +139,9 @@ async def lookup_or_scrape_and_analyse(
     # ── analyse (blocking GPU/CPU call) ──────────────────────────────────────
     logger.info("[DIGEST] Running generate_analysis for url=%r", url)
     news_details = await run_in_threadpool(at_deps.generate_analysis, raw_content)
+    print("====="*20)
+    print(news_details)
+    print("====="*20)
 
     if news_details is None:
         raise ValueError("Analysis model failed to produce a valid result.")
