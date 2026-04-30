@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     MONGO_URL:str
     MONGO_DB:str
     MONGO_COL_1:str
+    MONGO_COL_STATS:str
+    MONGO_COL_ANALYSIS:str
+
 
     CHROMA_PATH:str
     CHROMA_COLL:str
@@ -24,6 +27,12 @@ class Settings(BaseSettings):
 
 
     PROVIDERS:str
+
+    BotToken:str
+    chatID:str
+
+    ANALYZER_MODEL_NAME:str
+    ADAPTER_NAME:str
 
     class Config:
         env_file = ".env"
