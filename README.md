@@ -362,7 +362,7 @@ OPENAI_EMBEDDING_MODEL_ID=text-embedding-3-small
 PROVIDERS=openai
 
 ANALYZER_MODEL_NAME=Qwen/Qwen2.5-1.5B-Instruct
-ADAPTER_NAME=bakrianoo/news-analyzer
+ADAPTER_NAME=AbdoSaad24/news-analyzer
 
 BotToken=<telegram-bot-token>
 chatID=<telegram-chat-id>
